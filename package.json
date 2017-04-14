@@ -1,6 +1,6 @@
 {
   "name": "ykit-config-es6",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "编译 ES6+, JSX 插件",
   "main": "index.js",
   "scripts": {
