@@ -14,7 +14,7 @@
 $ npm install ykit-config-es6 --save
 ```
 
-编辑 `ykit.js`，引入插件：
+编辑 `ykit.js`，引入插件即可：
 
 ```
 module.exports = {
@@ -29,7 +29,7 @@ babel-polyfill 默认是没有引入的，需要根据项目需求手动引入�
 
 ### 功能
 
-babel 默认只转换新的 JavaScript 句法（syntax），而不转换新的API，比如 Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法（比如 Object.assign ）都不会转码。
+babel 默认只转换新的 JavaScript 句法（syntax），而不转换新的 API，比如 Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法（比如 Object.assign ）都不会转码。如果需要这些 API 则要手动引入 babel-polyfill。
 
 ### 引入
 
@@ -45,7 +45,7 @@ babel-polyfill 会增大 js 体积（压缩后 80k 左右），请根据项目�
 
 ## 如何更改配置？
 
-由于插件内置 `happypack`，因此该它的编译 es6 配置需要调用 `modifyHappypack` 接口：
+该插件支持更改 babel-loader 的 `test`、`exclude`、`query` 配置项：
 
 ```javascript
 module.exports = {
@@ -55,10 +55,12 @@ module.exports = {
             name: 'es6',
             options: {
                 // 更改 es6 配置
-                modifyHappypack: function(config) {
-                    // 通过 console.log(config) 可查看当前配置
-                    config.verbose = false;
-                    return config;
+                test: /\.(js)$/, // 默认是 /\.(js|jsx)$/
+                exclude: /node_modules\/(?!(MY_UI)\/).*/, // 默认是 /node_modules/
+                modifyQuery: function(defaultQuery) { // 可查看和编辑 defaultQuery
+                    defaultQuery.presets.push('my_preset');
+                    defaultQuery.plugins.push('my_plugin');
+                    return defaultQuery;
                 }
             }
         }
@@ -69,7 +71,7 @@ module.exports = {
 };
 ```
 
-## 插件配置详情（仅供参考）
+## 插件内置 Webpack 配置（仅供参考）
 
 ```javascript
 {
