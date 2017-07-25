@@ -71,6 +71,8 @@ module.exports = {
 };
 ```
 
+**注意：更改 bebal-loader 配置后有可能不会立即生效，此时需要清除一下缓存，清空 node_modules/.happypack 或重新安装 node_modules 即可。**
+
 ## 插件内置 Webpack 配置（仅供参考）
 
 ```javascript
@@ -94,9 +96,7 @@ module.exports = {
                         presets: [
                             'es2015',
                             'es2017',
-                            'stage-0',
-                            'stage-1',
-                            'stage-2',
+                            'stage-0'
                         ],
                         plugins: ['transform-es2015-modules-simple-commonjs']
                     }

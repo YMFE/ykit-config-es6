@@ -1,6 +1,6 @@
 {
   "name": "ykit-config-es6",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "编译 ES6+, JSX 插件",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,6 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-es2017": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
-    "babel-preset-stage-1": "^6.22.0",
-    "babel-preset-stage-2": "^6.22.0",
     "extend": "^3.0.0",
     "happypack": "^3.0.2"
   }
