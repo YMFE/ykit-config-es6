@@ -4,18 +4,30 @@ var path = require('path');
 var HappyPack = require('happypack');
 
 exports.config = function (options, cwd) {
-    var baseConfig = this.config,
+    var defaultQuery = {};
+    if(this.webpack.version && this.webpack.version >= 2) {
         defaultQuery = {
             cacheDirectory: true,
             presets: [
-                ["es2015", {"loose": true}],
+                ['es2015', {loose: true, modules: false}],
                 'es2017',
-                'stage-0',
-                'stage-1',
-                'stage-2',
+                'stage-0'
+            ],
+            plugins: []
+        }
+    } else {
+        defaultQuery = {
+            cacheDirectory: true,
+            presets: [
+                ['es2015', {loose: true, modules: 'commonjs'}],
+                'es2017',
+                'stage-0'
             ],
             plugins: ['transform-es2015-modules-simple-commonjs']
-        },
+        }
+    }
+
+    var baseConfig = this.config,
         testReg = options.test ? options.test : /\.(js|jsx)$/,
         exclude = options.exclude ? options.exclude : /node_modules/,
         query = options.modifyQuery ? options.modifyQuery(defaultQuery) : defaultQuery,
