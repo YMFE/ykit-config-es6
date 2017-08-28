@@ -45,8 +45,8 @@ exports.config = function (options, cwd) {
             cacheContext: {
                 env: process.env.NODE_ENV
             },
-            tempDir: path.join(cwd, 'node_modules/.happypack'),
-            cachePath: path.join(cwd, 'node_modules/.happypack/cache--[id].json')
+            tempDir: path.join(__dirname, '../happypack'),
+            cachePath: path.join(__dirname, '../happypack/cache--[id].json')
         };
 
     happyPackConfig = options.modifyHappypack ? options.modifyHappypack(happyPackConfig) : happyPackConfig;
