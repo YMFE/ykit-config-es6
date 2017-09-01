@@ -5,6 +5,12 @@ var HappyPack = require('happypack');
 
 exports.config = function (options, cwd) {
     var defaultQuery = {};
+    var babelPlugins = ['transform-class-properties', 'transform-decorators-legacy'];
+
+    if(options.ie8) {
+        babelPlugins.push('transform-es2015-modules-simple-commonjs');
+    }
+
     if(this.webpack.version && this.webpack.version >= 2) {
         defaultQuery = {
             cacheDirectory: true,
@@ -13,7 +19,7 @@ exports.config = function (options, cwd) {
                 'es2017',
                 'stage-0'
             ],
-            plugins: []
+            plugins: babelPlugins
         }
     } else {
         defaultQuery = {
@@ -23,7 +29,7 @@ exports.config = function (options, cwd) {
                 'es2017',
                 'stage-0'
             ],
-            plugins: ['transform-es2015-modules-simple-commonjs']
+            plugins: babelPlugins
         }
     }
 

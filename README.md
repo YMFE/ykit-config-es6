@@ -43,7 +43,22 @@ import 'babel-polyfill';
 babel-polyfill 会增大 js 体积（压缩后 80k 左右），请根据项目需求选择是否引入。
 </b>
 
-## 如何更改配置？
+## 配置项
+
+如果要支持 ie8 请传入配置项：
+
+```javascript
+module.exports = {
+    plugins: [
+        {
+            name: 'es6',
+            options: {
+                ie8: true
+            }
+        }
+    ]
+};
+```
 
 该插件支持更改 babel-loader 的 `test`、`exclude`、`query` 配置项：
 
@@ -71,45 +86,4 @@ module.exports = {
 };
 ```
 
-**注意：更改 bebal-loader 配置后有可能不会立即生效，此时需要清除一下缓存，清空 node_modules/.happypack 或重新安装 node_modules 即可。**
-
-## 插件内置 Webpack 配置（仅供参考）
-
-```javascript
-{
-    module: {
-        loaders: baseConfig.module.loaders.concat([{
-            test: /\.(js|jsx)$/,
-            exclude: /(node_modules)/,
-            loaders: ['happypack/loader']
-        }])
-    },
-    plugins: baseConfig.plugins.concat([
-        new HappyPack({
-            loaders: [
-                {
-                    loader: require.resolve('babel-loader'),
-                    test: /\.(js|jsx)$/,
-                    exclude: /node_modules/,
-                    query: {
-                        cacheDirectory: true,
-                        presets: [
-                            'es2015',
-                            'es2017',
-                            'stage-0'
-                        ],
-                        plugins: ['transform-es2015-modules-simple-commonjs']
-                    }
-                }
-            ],
-            threads: 4,
-            verbose: false,
-            cacheContext: {
-                env: process.env.NODE_ENV
-            },
-            tempDir: path.join(cwd, 'node_modules/.happypack'),
-            cachePath: path.join(cwd, 'node_modules/.happypack/cache--[id].json')
-        })
-    ])
-}
-```
+**注意：更改 bebal-loader 配置后有可能不会立即生效，此时需要清除一下缓存，重新安装 node_modules 即可。**
