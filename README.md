@@ -2,7 +2,7 @@
 
 ## Features
 
-- 编译 ES6+, JSX 代码（兼容至 IE8）
+- 编译 ES6+代码（兼容至 IE8）
 - 通过 happypack 提升编译速度
 - 添加 babel-polyfill
 
