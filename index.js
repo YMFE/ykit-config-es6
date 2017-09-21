@@ -69,4 +69,14 @@ exports.config = function (options, cwd) {
             new HappyPack(happyPackConfig)
         ])
     });
+
+    if(options.removeStrict) {
+        var postLoaders = baseConfig.module.postLoaders ? baseConfig.module.postLoaders : [];
+        postLoaders.push(
+            {
+                test: /\.js$/,
+                loader: path.join(__dirname, 'remove-strict-loader.js')
+            }
+        )
+    }
 };
