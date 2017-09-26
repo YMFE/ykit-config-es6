@@ -15,9 +15,13 @@ exports.config = function (options, cwd) {
         defaultQuery = {
             cacheDirectory: true,
             presets: [
-                ['es2015', {loose: true, modules: false}],
-                'es2017',
-                'stage-0'
+                ['env', {
+                    modules: false,
+                    targets: {
+                        browsers: 'last 2 versions' + (options.ie8 ? ', ie 8' : '')
+                    },
+                    useBuiltIns: 'usage'
+                }]
             ],
             plugins: babelPlugins
         }
@@ -25,9 +29,13 @@ exports.config = function (options, cwd) {
         defaultQuery = {
             cacheDirectory: true,
             presets: [
-                ['es2015', {loose: true, modules: 'commonjs'}],
-                'es2017',
-                'stage-0'
+                ['env', {
+                    modules: 'commonjs',
+                    targets: {
+                        browsers: 'last 2 versions' + (options.ie8 ? ', ie 8' : '')
+                    },
+                    useBuiltIns: 'usage'
+                }]
             ],
             plugins: babelPlugins
         }
