@@ -5,7 +5,11 @@ var HappyPack = require('happypack');
 
 exports.config = function (options, cwd) {
     var defaultQuery = {};
-    var babelPlugins = ['transform-class-properties', 'transform-decorators-legacy'];
+    var babelPlugins = [
+        'transform-class-properties',
+        'transform-decorators-legacy',
+        'transform-object-rest-spread'
+    ];
 
     if(options.ie8) {
         babelPlugins.push('transform-es2015-modules-simple-commonjs');

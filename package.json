@@ -1,6 +1,6 @@
 {
   "name": "ykit-config-es6",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "编译 ES6+, JSX 插件",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
-    "babel-polyfill": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "6.26.0",
     "babel-preset-env": "^1.6.0",
     "extend": "^3.0.0",
     "happypack": "^3.0.2"
