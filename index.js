@@ -16,34 +16,27 @@ exports.config = function (options, cwd) {
         babelPlugins.push('transform-es2015-modules-simple-commonjs');
     }
 
-    if(this.webpack.version && this.webpack.version >= 2) {
-        defaultQuery = {
-            cacheDirectory: true,
-            presets: [
-                ['env', {
-                    modules: false,
+    var isWebpack2 = this.webpack.version && this.webpack.version >= 2;
+    defaultQuery = {
+        cacheDirectory: false,
+        presets: [
+            [
+                'env', {
+                    modules: isWebpack2 ? false : 'commonjs',
                     targets: {
-                        browsers: 'last 2 versions' + (options.ie8 ? ', ie 8' : '')
+                        browsers: [
+                            '> 1%',
+                            'last 3 versions',
+                            'ios 8',
+                            'android 4.2',
+                            options.ie8 ? 'ie 8' : 'ie 9'
+                        ]
                     },
                     useBuiltIns: 'usage'
-                }]
-            ],
-            plugins: babelPlugins
-        }
-    } else {
-        defaultQuery = {
-            cacheDirectory: true,
-            presets: [
-                ['env', {
-                    modules: 'commonjs',
-                    targets: {
-                        browsers: 'last 2 versions' + (options.ie8 ? ', ie 8' : '')
-                    },
-                    useBuiltIns: 'usage'
-                }]
-            ],
-            plugins: babelPlugins
-        }
+                }
+            ]
+        ],
+        plugins: babelPlugins
     }
 
     var baseConfig = this.config,
