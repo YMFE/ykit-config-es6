@@ -8,7 +8,8 @@ exports.config = function (options, cwd) {
     var babelPlugins = [
         'transform-class-properties',
         'transform-decorators-legacy',
-        'transform-object-rest-spread'
+        'transform-object-rest-spread',
+        'transform-object-assign'
     ];
 
     if(options.ie8) {
