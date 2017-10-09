@@ -6,8 +6,8 @@ var HappyPack = require('happypack');
 exports.config = function (options, cwd) {
     var defaultQuery = {};
     var babelPlugins = [
-        'transform-class-properties',
         'transform-decorators-legacy',
+        'transform-class-properties',
         'transform-object-rest-spread',
         'transform-object-assign'
     ];
