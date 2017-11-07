@@ -18,7 +18,7 @@ exports.config = function (options, cwd) {
 
     var isWebpack2 = this.webpack.version && this.webpack.version >= 2;
     defaultQuery = {
-        cacheDirectory: false,
+        cacheDirectory: true,
         presets: [
             [
                 'env', {
