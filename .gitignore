@@ -32,3 +32,6 @@ Thumbs.db
 # *.zip
 # *.tar
 # *.tar.gz
+
+yarn.lock
+package-lock.json

@@ -4,45 +4,42 @@ var path = require('path');
 var HappyPack = require('happypack');
 
 exports.config = function (options, cwd) {
-    var defaultQuery = {};
-    var babelPlugins = [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-        'transform-object-rest-spread',
-        'transform-object-assign'
-    ];
-
-    if(options.ie8) {
-        babelPlugins.push('transform-es2015-modules-simple-commonjs');
-    }
-
     var isWebpack2 = this.webpack.version && this.webpack.version >= 2;
-    defaultQuery = {
-        cacheDirectory: true,
-        presets: [
+    var babelQuery = {
+        "cacheDirectory": true,
+        "presets": [
             [
-                'env', {
-                    modules: isWebpack2 ? false : 'commonjs',
-                    targets: {
+                "env", {
+                    "modules": isWebpack2 ? false : "commonjs",
+                    "targets": {
                         browsers: [
-                            '> 1%',
-                            'last 3 versions',
-                            'ios 8',
-                            'android 4.2',
-                            options.ie8 ? 'ie 8' : 'ie 9'
+                            "> 1%",
+                            "last 3 versions",
+                            "ios 8",
+                            "android 4.2",
+                            options.ie8 ? "ie 8" : "ie 9"
                         ]
                     },
-                    useBuiltIns: 'usage'
+                    "useBuiltIns": "usage"
                 }
             ]
         ],
-        plugins: babelPlugins
+        "plugins": [
+            "transform-class-properties",
+            "transform-decorators-legacy",
+            "transform-object-rest-spread",
+            "transform-object-assign"
+        ]
+    }
+
+    if(options.ie8) {
+        babelQuery.plugins.push('transform-es2015-modules-simple-commonjs');
     }
 
     var baseConfig = this.config,
         testReg = options.test ? options.test : /\.(js|jsx)$/,
         exclude = options.exclude ? options.exclude : /node_modules/,
-        query = options.modifyQuery ? options.modifyQuery(defaultQuery) : defaultQuery,
+        query = options.modifyQuery ? options.modifyQuery(babelQuery) : babelQuery,
         happyPackConfig = {
             loaders: [
                 {
@@ -85,4 +82,6 @@ exports.config = function (options, cwd) {
             }
         )
     }
+
+    return babelQuery;
 };
