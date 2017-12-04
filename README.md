@@ -45,6 +45,8 @@ babel-polyfill 会增大 js 体积（压缩后 80k 左右），请根据项目�
 
 ## 配置项
 
+### ie8 支持
+
 如果要支持 ie8 请传入配置项：
 
 ```javascript
@@ -59,6 +61,8 @@ module.exports = {
     ]
 };
 ```
+
+### 更改 ES6 编译配置
 
 该插件支持更改 babel-loader 的 `test`、`exclude`、`query` 配置项：
 
@@ -87,3 +91,20 @@ module.exports = {
 ```
 
 **注意：更改 bebal-loader 配置后有可能不会立即生效，此时需要清除一下缓存，重新安装 node_modules 即可。**
+
+### 禁用严格模式
+
+Babel 会默认为 JS 文件添加严格模式，如果想要禁用它可以传入 removeStrict 参数
+
+```javascript
+module.exports = {
+    plugins: [
+        {
+            name: 'es6',
+            options: {
+                removeStrict: true
+            }
+        }
+    ]
+};
+```
