@@ -25,8 +25,8 @@ exports.config = function (options, cwd) {
             ]
         ],
         "plugins": [
+            "transform-decorators-legacy", // mobx 要求这个插件必须在最前
             "transform-class-properties",
-            "transform-decorators-legacy",
             "transform-object-rest-spread",
             "transform-object-assign",
             "transform-function-bind"
