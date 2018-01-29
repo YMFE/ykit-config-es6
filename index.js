@@ -33,10 +33,6 @@ exports.config = function (options, cwd) {
         ]
     }
 
-    if(options.ie8) {
-        babelQuery.plugins.push('transform-es2015-modules-simple-commonjs');
-    }
-
     var baseConfig = this.config,
         testReg = options.test ? options.test : /\.(js|jsx)$/,
         exclude = options.exclude ? options.exclude : /node_modules/,
