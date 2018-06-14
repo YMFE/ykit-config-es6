@@ -1,23 +1,22 @@
 'use strict';
 
-var path = require('path');
-var HappyPack = require('happypack');
+const path = require('path');
+const HappyPack = require('happypack');
 
-exports.config = function (options, cwd) {
-    var isWebpack2 = this.webpack.version && this.webpack.version >= 2;
-    var babelQuery = {
+exports.config = function (opts, cwd) {
+    const babelLoaderOptions = {
         "cacheDirectory": true,
         "presets": [
             [
                 "env", {
-                    "modules": isWebpack2 ? false : "commonjs",
+                    "modules": false,
                     "targets": {
                         browsers: [
                             "> 1%",
                             "last 3 versions",
                             "ios 8",
                             "android 4.2",
-                            options.ie8 ? "ie 8" : "ie 9"
+                            opts.ie8 ? "ie 8" : "ie 9"
                         ]
                     },
                     "useBuiltIns": "usage"
@@ -31,54 +30,39 @@ exports.config = function (options, cwd) {
             "transform-object-assign",
             "transform-function-bind"
         ]
-    }
+    };
 
-    var baseConfig = this.config,
-        testReg = options.test ? options.test : /\.(js|jsx)$/,
-        exclude = options.exclude ? options.exclude : /node_modules/,
-        query = options.modifyQuery ? options.modifyQuery(babelQuery) : babelQuery,
+    const baseConfig = this.config,
+        testReg = opts.test ? opts.test : /\.jsx?$/,
+        exclude = opts.exclude ? opts.exclude : /node_modules/,
+        options = opts.modifyQuery ? opts.modifyQuery(babelLoaderOptions) : babelLoaderOptions,
         happyPackConfig = {
-            loaders: [
-                {
-                    loader: 'babel-loader',
-                    test: testReg,
-                    exclude: exclude,
-                    query: query
-                }
-            ],
-            threads: 4,
-            verbose: false,
-            cacheContext: {
-                env: process.env.NODE_ENV
-            },
-            tempDir: path.join(__dirname, '../happypack'),
-            cachePath: path.join(__dirname, '../happypack/cache--[id].json')
-        };
-
-    happyPackConfig = options.modifyHappypack ? options.modifyHappypack(happyPackConfig) : happyPackConfig;
-
-    extend(true, baseConfig, {
-        module: {
-            loaders: baseConfig.module.loaders.concat([{
+            id: 'es6',
+            loaders: [{
+                loader: 'babel-loader',
                 test: testReg,
                 exclude: exclude,
-                loader: 'happypack/loader'
-            }])
-        },
-        plugins: baseConfig.plugins.concat([
-            new HappyPack(happyPackConfig)
-        ])
+                options: options
+            }],
+            threads: 4,
+            verbose: false,
+        };
+
+    baseConfig.module.rules.push({
+        test: testReg,
+        exclude: exclude,
+        use: ['happypack/loader?id=es6']
     });
 
-    if(options.removeStrict) {
-        var postLoaders = baseConfig.module.postLoaders ? baseConfig.module.postLoaders : [];
-        postLoaders.push(
-            {
-                test: /\.js$/,
-                loader: path.join(__dirname, 'remove-strict-loader.js')
-            }
-        )
+    baseConfig.plugins.push(new HappyPack(happyPackConfig));
+
+    if (options.removeStrict) {
+        baseConfig.module.rules.push({
+            test: /\.js$/,
+            enforce: 'post',
+            loader: path.join(__dirname, 'remove-strict-loader.js')
+        });
     }
 
-    return babelQuery;
+    return babelLoaderOptions;
 };

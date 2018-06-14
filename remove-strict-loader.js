@@ -1,3 +1,1 @@
-module.exports = function (content) {
-    return content.replace(/["']use strict["']/g, '');
-}
+module.exports = content => content.replace(/["']use strict["']/g, '');
